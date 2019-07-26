@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using NHibernate;
@@ -18,6 +19,16 @@ namespace order_service_test
             Assert.Equal(1, order.OrderItems.Count);
             Assert.Equal(productName, order.OrderItems.First().ProductName);
             Assert.Equal(count, order.OrderItems.First().Count);
+        }
+
+        [Fact]
+        public void should_throw_exception_when_create_order_given_more_than_20_items()
+        {
+            var orderItems = new List<OrderItem>{};
+            for(int i = 0; i<=21; i++){
+                orderItems.Add(new OrderItem($"productName{i}", 1));
+            }
+            Assert.Throws<ArgumentException>(() => new Order (orderItems));
         }
     }
 }

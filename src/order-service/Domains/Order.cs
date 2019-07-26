@@ -9,6 +9,9 @@ namespace order_service.Domains{
 
         public Order(List<OrderItem> orderItems)
         {
+            if(orderItems.Count>20){
+                throw new ArgumentException("itmes should less than 20");
+            }
             this.Id = Guid.NewGuid();
             this.OrderItems = orderItems;
         }
