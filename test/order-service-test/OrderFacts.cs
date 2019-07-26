@@ -14,11 +14,13 @@ namespace order_service_test
         {
             string productName = "Pen";
             int count = 2;
-            var order = new Order (new List<OrderItem>{new OrderItem(productName, count)});
+            string productId = "1";
+            var order = new Order (new List<OrderItem>{new OrderItem(productName, productId, count)});
             Assert.NotNull(order.Id);
             Assert.Equal(1, order.OrderItems.Count);
             Assert.Equal(productName, order.OrderItems.First().ProductName);
             Assert.Equal(count, order.OrderItems.First().Count);
+            Assert.Equal(productId, order.OrderItems.First().ProductId); 
         }
 
         [Fact]
@@ -26,7 +28,7 @@ namespace order_service_test
         {
             var orderItems = new List<OrderItem>{};
             for(int i = 0; i<=21; i++){
-                orderItems.Add(new OrderItem($"productName{i}", 1));
+                orderItems.Add(new OrderItem($"productName{i}", "i", 1));
             }
             Assert.Throws<ArgumentException>(() => new Order (orderItems));
         }
